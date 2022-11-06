@@ -11,11 +11,11 @@
             <q-toolbar-title>
               Query
             </q-toolbar-title>
-            <q-btn dense flat round @click="saveQuery">
+            <q-btn :disable="!query" dense flat round @click="saveQuery">
               <q-icon name="save"/>
               <q-tooltip>Save to Disk</q-tooltip>
             </q-btn>
-            <q-btn dense flat round @click="runQuery">
+            <q-btn :disable="!query" dense flat round @click="runQuery">
               <q-icon name="play_arrow"/>
               <q-tooltip>Run Query</q-tooltip>
             </q-btn>

@@ -86,7 +86,8 @@ export const useQueryStore = defineStore('query', {
       this.resultLoading = true;
       let queryTab = this.currentQueryTab;
       if (queryTab === "brownie_points") queryTab = "all_order_details";
-      const url = PATHS[queryTab.split(/_(.*)/s)[1]];
+      // fallback to default categories path for new queries
+      const url = PATHS[queryTab.split(/_(.*)/s)[1]] || PATHS["categories"];
       return await api.get(url)
         .then((response) => {
           const data = response.data.content;
