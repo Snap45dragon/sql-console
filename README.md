@@ -1,5 +1,5 @@
 # SQL Query Console
-An sql console for data nerds
+An sql console for data nerds. View demo - https://sql-console.pages.dev
 
 <!-- About the Project -->
 ## About the Project
