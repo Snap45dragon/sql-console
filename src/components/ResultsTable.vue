@@ -49,7 +49,7 @@
 <script setup>
 import Papa from "papaparse";
 import {useQueryStore} from "stores/query-store";
-import {computed, ref} from "vue";
+import {computed, ref, watch} from "vue";
 
 const queryStore = useQueryStore();
 
@@ -61,12 +61,12 @@ const props = defineProps({
 })
 
 const filter = ref("");
-queryStore.$subscribe((mutation) => {
-  if (mutation.events.key === "currentQueryTab") {
-    // current tab changed, reset filters
-    filter.value = "";
-  }
-})
+
+const currentQueryTab = computed(() => queryStore.currentQueryTab);
+watch(currentQueryTab, () => {
+  // current tab changed, reset filters
+  filter.value = "";
+});
 
 const result = computed(() => queryStore.getCurrentTabResults);
 const columns = computed(() => {
