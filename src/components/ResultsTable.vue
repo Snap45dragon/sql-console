@@ -61,7 +61,6 @@ const props = defineProps({
 })
 
 const filter = ref("");
-
 const currentQueryTab = computed(() => queryStore.currentQueryTab);
 watch(currentQueryTab, () => {
   // current tab changed, reset filters
@@ -72,7 +71,9 @@ const result = computed(() => queryStore.getCurrentTabResults);
 const columns = computed(() => {
   const cols = [];
   if (!result.value) return cols;
+  // extract columns from papaparse returned object.
   const columnNames = result.value.meta.fields;
+  // create columns array as required by q-table
   for (const columnName of columnNames) {
     cols.push({
       name: columnName,
@@ -86,10 +87,13 @@ const columns = computed(() => {
   return cols;
 })
 const rows = computed(() => {
+  // create rows as required by q-table
+  // slicing last row as papaparse errors out for last new line and returns null row
   return result.value ? result.value.data.slice(0, -1) : [];
 });
 
 function exportTable() {
+  // create a dummy anchor and a file blob to download file
   const a = document.createElement("a");
   const blob = new Blob([Papa.unparse(rows.value)],
     {type: "text/csv;charset=utf-8"});

@@ -62,6 +62,7 @@ const query = computed({
 })
 
 function saveQuery() {
+  // create a dummy anchor and a file blob to download file
   const a = document.createElement("a");
   const blob = new Blob([query.value],
     {type: "application/sql;charset=utf-8"});

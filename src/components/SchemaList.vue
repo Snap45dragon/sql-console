@@ -30,6 +30,7 @@ const selected = computed({
   }
 })
 
+// dummy list of schemas and its associated tabled and columns
 const schemas = ref([
   {
     label: 'northwind',
