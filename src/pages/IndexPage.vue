@@ -2,16 +2,34 @@
   <q-page>
     <q-tabs
       v-model="currentTab"
+      active-bg-color="white"
+      active-color="primary"
       align="left"
       class="bg-purple text-white shadow-2"
       dense
+      indicator-color="transparent"
       inline-label
-      narrow-indicator
     >
-      <q-tab v-for="queryTab in queryStore.queryTabs" :key="queryTab.name" :label="queryTab.label" :name="queryTab.name"/>
-      <q-tab icon="add" label="New Query" name="add" @click="addNewQueryTab"></q-tab>
+      <q-tab
+        v-for="queryTab in queryStore.queryTabs"
+        :key="queryTab.name"
+        :label="queryTab.label"
+        :name="queryTab.name"
+      >
+        <template #default>
+          <q-btn class="q-ml-md" dense flat icon="close" round size="8px" @click.stop="closeTab(queryTab.name)"/>
+        </template>
+      </q-tab>
+      <q-tab icon="add" label="New Console" name="add" @click="addNewQueryTab"></q-tab>
     </q-tabs>
-    <SqlApp></SqlApp>
+    <template v-if="queryStore.queryTabs && queryStore.queryTabs.length > 0">
+      <SqlApp></SqlApp>
+    </template>
+    <template v-else>
+      <div class="flex flex-center content-center text-h4" style="height: calc(100vh - 86px);">
+        Open a console to write queries
+      </div>
+    </template>
   </q-page>
 </template>
 
@@ -30,6 +48,10 @@ const currentTab = computed({
     queryStore.setCurrentQueryTab(newValue);
   }
 })
+
+function closeTab(queryTab) {
+  queryStore.closeQueryTab(queryTab)
+}
 
 function addNewQueryTab() {
   queryStore.createNewQueryTab();

@@ -54,10 +54,17 @@ export const useQueryStore = defineStore('query', {
       this.currentQueryTab = queryTab;
     },
     createNewQueryTab() {
-      // create new query tabs with the name Query followed by no.
-      this.queryTabs.push({label: `Query ${this.queryTabCounter}`, name: `query${this.queryTabCounter}`})
-      this.currentQueryTab = `query${this.queryTabCounter}`;
+      // create new query tabs with the name Console followed by no.
+      this.queryTabs.push({label: `Console ${this.queryTabCounter}`, name: `console${this.queryTabCounter}`})
+      this.currentQueryTab = `console${this.queryTabCounter}`;
       this.queryTabCounter++;
+    },
+    closeQueryTab(queryTab) {
+      this.queryTabs.splice(this.queryTabs.findIndex(item => item.name === queryTab), 1);
+      if (queryTab === this.currentQueryTab) this.currentQueryTab = this.queryTabs[0]?.name || null;
+      delete this.queries[queryTab];
+      delete this.results[queryTab];
+      delete this.activityLog[queryTab];
     },
     updateResults(csv) {
       // parse csv string to rows and columns js objects

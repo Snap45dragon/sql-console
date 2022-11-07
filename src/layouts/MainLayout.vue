@@ -6,7 +6,6 @@
         <q-toolbar-title>
           SQL Console
         </q-toolbar-title>
-
         <q-btn dense flat icon="schema" :label="queryStore.currentSchema" @click="toggleRightDrawer"/>
       </q-toolbar>
     </q-header>
